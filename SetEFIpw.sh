@@ -2,7 +2,7 @@
 
 # Script to implement an EFI password policy on a Casper Mac running 10.8 or better.
 
-# Author: r.purves@arts.ac.uk
+# Author: contact@richard-purves.com
 # Version 1.0 : 18-10-2013 - Initial version
 # Version 1.1 : 29-10-2013 - Moved Recovery HD mount/dismount into their own functions for easy access
 # Version 1.2 : 29-10-2013 - OS Version checking because Recovery path changes
