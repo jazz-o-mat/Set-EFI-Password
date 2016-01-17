@@ -10,7 +10,7 @@ You can wrap the script into a package and deloy this via munki etc.
 
 Instructions
 ------------
-- When calling the script you must specify the following information:
+When calling the script you must specify the following information:
 
 Parameter 1: Operating Mode - This tells the script whether to set, change or remove a password.
 Acceptable inputs are "initial", "change" or "remove".
