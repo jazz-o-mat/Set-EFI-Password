@@ -1,26 +1,25 @@
 Set EFI Password
 ----------------
 
+This script allows the user to set, change and remove an EFI password from computer(s).
 
-This script allows the Casper user to set, change and remove an EFI password from computer(s).
+I forked the version from https://github.com/franton/Set-EFI-Password.git. I changed it for standalone use and fixed it for 10.10 and 10.11. (credits go to Richard Purves) 
 
-I use this as it's a little more flexible than JAMF's solution. aka It uses setregproptool straight from the Recovery partition rather than having to continually package the correct version and deploy it to the computer.
+It uses setregproptool straight from the Recovery partition rather than having to continually package the correct version and deploy it to the computer.
+You can wrap the script into a package and deloy this via munki etc. 
 
 Instructions
 ------------
+- When calling the script you must specify the following information:
 
-1) Add the script to your JSS.
-2) Change the script parameters to something more readable.
-3) When calling the script you must specify the following information:
-
-Parameter 4: Operating Mode - This tells the script whether to set, change or remove a password.
+Parameter 1: Operating Mode - This tells the script whether to set, change or remove a password.
 Acceptable inputs are "initial", "change" or "remove".
 
-Parameter 5: New Password - This is the new password you wish to give the system
+Parameter 2: New Password - This is the new password you wish to give the system (use "" for empty passwords)
 
-Parameter 6: Old Password - Required for password changes and removal
+Parameter 3: Old Password - Required for password changes and removal (use "" for empty passwords)
 
-Parameter 7: Security Mode - This is the mode that the EFI password will operate in.
+Parameter 4: Security Mode - This is the mode that the EFI password will operate in.
 (This option is required for "initial" and "change" operating modes)
 Acceptable inputs are "full" and "command".
 

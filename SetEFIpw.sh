@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# Script to implement an EFI password policy on a Casper Mac running 10.8 or better.
-
-# Author: contact@richard-purves.com
-# Version 1.0 : 18-10-2013 - Initial version
-# Version 1.1 : 29-10-2013 - Moved Recovery HD mount/dismount into their own functions for easy access
-# Version 1.2 : 29-10-2013 - OS Version checking because Recovery path changes
+# Script to implement an EFI password policy on a Mac running 10.8 or better.
 
 # Set up path variables for easy access and change
 
@@ -23,17 +18,17 @@ recoverypath="Recovery HD"
 # initial	- This will install the first EFI password on the system. This requires the security mode to be supplied.
 # change	- This will change the EFI password as long as the correct old password is supplied.
 # remove	- This will remove the EFI password as long as the correct old password is supplied.
-operatingmode=$4
+operatingmode=$1
 
 # Get password details in the next two variables
-newpassword=$5
-oldpassword=$6
+newpassword=$2
+oldpassword=$3
 
 # Get the security mode. Required for the "initial" operating mode.
 # Acceptable inputs are as follows:
 # full		- This will require password entry on every boot
 # command	- This only requires password entry if boot picker is invoked with alt key.
-securitymode=$7
+securitymode=$4
 
 # Which OS is this running on?
 
@@ -46,7 +41,7 @@ function openrecovery {
 		then
 			/usr/sbin/diskutil mount "$recoverypath"
 			/usr/bin/hdiutil attach -quiet -nobrowse "$basesyspath"
-		elif [ ${osvers} -eq 9 ]
+		elif [ ${osvers} -ge 9 ]
 		then
 			/usr/sbin/diskutil mount "$recoverypath"
 			/usr/bin/hdiutil attach -quiet -nobrowse "$basesyspath"
@@ -61,7 +56,7 @@ function closerecovery {
 		then
 			/usr/bin/hdiutil detach "$MLmntpath"
 			/usr/sbin/diskutil unmount "$recoverypath"
-		elif [ ${osvers} -eq 9 ]
+		elif [ ${osvers} -ge 9 ]
 		then
 			/usr/bin/hdiutil detach "$MVmntpath"
 			/usr/sbin/diskutil unmount "$recoverypath"
@@ -105,7 +100,7 @@ case "$operatingmode" in
 		if [ ${osvers} -eq 8 ];
 			then
 				"$MLmntpath/$toolpath" -p $newpassword -m $securitymode
-			elif [ ${osvers} -eq 9 ]
+			elif [ ${osvers} -ge 9 ]
 			then
 				"$MVmntpath/$toolpath" -p $newpassword -m $securitymode
 			else
@@ -155,7 +150,7 @@ case "$operatingmode" in
 		if [ ${osvers} -eq 8 ];
 			then
 				"$MLmntpath/$toolpath" -m $securitymode -p $newpassword -o $oldpassword
-			elif [ ${osvers} -eq 9 ]
+			elif [ ${osvers} -ge 9 ]
 			then
 				"$MVmntpath/$toolpath" -m $securitymode -p $newpassword -o $oldpassword
 			else
@@ -186,7 +181,7 @@ case "$operatingmode" in
 		if [ ${osvers} -eq 8 ];
 			then
 				"$MLmntpath/$toolpath" -d -o $oldpassword
-			elif [ ${osvers} -eq 9 ]
+			elif [ ${osvers} -ge 9 ]
 			then
 				"$MVmntpath/$toolpath" -d -o $oldpassword
 			else
